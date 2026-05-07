@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: lavish
+      POSTGRES_DB: data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - pg_network
+  
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "8000:80"
+    networks:
+      - pg_network
+    depends_on: 
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    
+      
+volumes:
+  postgres_data:
+  pgadmin_data:
+    
+networks:
+  pg_network:
+    name: pg_network
+    driver: bridge
+    
+
+

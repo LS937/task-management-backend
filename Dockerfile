@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 COPY target/task-management.jar task-management.jar
 EXPOSE 8080
